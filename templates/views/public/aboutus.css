@@ -71,15 +71,31 @@
          margin-left: 1.5rem;
          font-weight: bold;
      }
-     .aboutus{
+    .aboutus{
          width: 80%;
          margin: 4rem auto;
-         display: flex;
+         color: #fff;
+         border: none;
+         padding: 1rem;
         
      }
      .about-1{
            background-color: #fff;
      }
+     #linkedin{
+        color: #fff;
+     }
+     .aboutus i{
+        padding: 0.8rem;
+        color: #fff;
+     }
+     .aboutus i:hover{
+        color: black;
+     }
+     #linkedin:hover{
+        color: black;
+     }
+    
      @media(max-width:910px){
          #menubars{
              display: block;
