@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <title>yournotes.com</title>
+    <link rel="stylesheet" href="login.css">
+    <script>
+        function myFunction(){
+
+var x = document.getElementById("container");
+
+  if (x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+
+
+
+</script>
+</head>
+<style>
+  
+
+</style>
+<body>
+
+<div class="opacity">
+    <div class="header">
+
+        <div class="navbar" id="myDIV">
+             <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
+            <i class="notes">Yournotes.com</i>
+               <div id="container">
+                <ul>
+                <a href="/"> <li>Home</li></a>
+               
+                <a href="/services"><li>AboutUs</li></a>
+              <!--  <a href="/register"> <li>Register</li></a> -->
+                
+                </ul>
+               </div>
+           
+        </div>
+        
+    </div>
+    <div class="form">
+       
+          <!--  <h1>Login</h1>
+            <div class="form-inner">
+                <form action="/login" method="post">
+                    <label for="email">email</label>
+                    <input type="email" name="email" id="email" placeholder="enter your email">
+                    <label for="password">password</label>
+                    <input type="password" name="password" placeholder="enter your password">
+                    <button type="submit" value="submit" id="button">login</button>
+                </form>
+                
+                
+            </div>
+            <h1 class="or">OR</h1> -->
+            <div class="google">
+                <img src="google.png" alt="" id="img">
+                <a href="/google"> sign in with google</a>
+            </div>
+           <!-- <div class="account">
+                <h2>don't have an account?</h2>
+                <a href="/register"> Register here.. </a>
+                
+            </div> -->
+    </div>
+
+</div>
+    
+</body>
+</html>

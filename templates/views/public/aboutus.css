@@ -1,0 +1,109 @@
+:root{
+    --green: rgb(110, 48, 48);
+    --black: #192a56;
+    --light-color: #dcedf7;
+    --box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem #ffff;
+   }
+   *{
+     
+     font-family: 'Nunito', sans-serif; 
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     text-decoration: none;
+     outline: none;
+     border: none;
+     text-transform: capitalize;
+     background-color: var(--black);
+    /* transition: all .3s linear;
+     scroll-behavior: smooth;*/
+ 
+     
+   }
+   .header{
+         position: sticky;
+         top: 0;
+         z-index: 1;
+         
+ 
+     }
+     .navbar{
+        /* background-color: var(--black);
+         box-shadow: var(--box-shadow);*/
+         display: flex;
+         width: 100%;
+         
+     }
+     #container{
+         margin-left: 15%;
+     }
+     .navbar ul{
+         display: flex;
+         justify-content: center;
+         font-weight: 900;
+     }
+     .navbar ul li {
+         padding:  1rem;
+         color: #fff;
+         font-size: 1.5rem;
+         list-style: none;
+         cursor: pointer;
+     }
+    
+    
+     .navbar a{
+         text-decoration: none;
+         
+     }
+     .notes{
+         padding: 1rem;
+         color: #fff;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+ 
+     }
+     #menubars{
+         display: none;
+          padding: 1rem;
+         color: black;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+     }
+     .aboutus{
+         width: 80%;
+         margin: 4rem auto;
+         display: flex;
+        
+     }
+     .about-1{
+           background-color: #fff;
+     }
+     @media(max-width:910px){
+         #menubars{
+             display: block;
+             color: #fff;
+         }
+         #container{
+             display: none;
+         }
+        .header .navbar ul{
+         position: absolute;
+         display: flex;
+         top: 4rem;
+         left: 0rem;
+         padding: 0.1rem 0.5rem 0.1rem ;
+ 
+ 
+         
+         }
+         .header .navbar ul li{
+            padding: 0.3rem;
+            font-size: 1rem;
+         }
+ 
+     }
+ 
+    
+    

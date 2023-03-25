@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <title></title>
+    <script>
+           function myFunction(){
+
+var x = document.getElementById("container");
+
+  if (x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+
+    </script>
+</head>
+<style>
+
+     *{
+    
+    font-family: 'Nunito', sans-serif; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    text-transform: capitalize;
+   /* transition: all .3s linear;
+    scroll-behavior: smooth;*/
+
+    
+  }
+  
+  .header{
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        
+
+    }
+     .notes{
+        padding: 1rem;
+        color: black;
+        font-size: 1.5rem;
+        margin-left: 1.5rem;
+        font-weight: bold;
+
+    }
+   
+    
+    .navbar{
+       /* background-color: var(--black);
+        box-shadow: var(--box-shadow);*/
+        display: flex;
+        width: 100%;
+        position: relative;
+        
+    }
+    #container{
+        margin-left: 15%;
+    }
+    .navbar ul{
+        display: flex;
+        justify-content: center;
+        font-weight: 900;
+    }
+    .navbar ul li {
+        padding:  1rem;
+        color: black;
+        font-size: 1.5rem;
+        list-style: none;
+        cursor: pointer;
+    }
+    .navbar a{
+        text-decoration: none;
+        
+    }
+    .opacity{
+        
+       
+        position: relative;
+        height: 648px;
+        
+       
+    }
+    .opacity:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.2;
+        background-image: url("images/pic-1.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .container-form{
+        position: relative;
+        width: 25%;
+        margin: 8% auto;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+    }
+    form input,button{
+        padding: 0.5rem;
+        border: 0.1rem solid black;
+        margin-top: 0.8rem;
+    }
+     #menubars{
+        display: none;
+        padding: 1rem;
+        color: black;
+        font-size: 1.5rem;
+        margin-left: 1.5rem;
+        font-weight: bold;
+    }
+
+    @media(max-width:910px){
+        .header ul{
+            display: none;
+        }
+        .quotes{
+            font-size: 1rem;
+        }
+         #container{
+            display: none;
+        }
+          #menubars{
+            display: block;
+        }
+          .header .navbar ul{
+        position: absolute;
+        display: flex;
+        top: 4rem;
+        left: 0rem;
+        padding: 0.1rem 0.5rem 0.1rem ;
+
+
+        
+        }
+        .header .navbar ul li{
+           padding: 0.5rem;
+           font-size: 1rem;
+        }
+        .container-form{
+        position: relative;
+        width: 70%;
+        margin: 10% auto;
+      }
+
+
+        
+    }
+
+  
+</style>
+
+<body>
+
+<div class="opacity">
+    <div class="header">
+
+        <div class="navbar" id="myDIV">
+             <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
+            <i class="notes">Yournotes.com</i>
+               <div id="container">
+                <ul>
+                <a href="/"> <li>Home</li></a>
+               
+                <a href="/services"><li>AboutUs</li></a>
+                <a href="/login">  <li> login </li></a>
+                </ul>
+               </div>
+           
+        </div>
+        
+    </div>
+     
+     
+    <div class="container-form">
+         <form action="/register" method="post" id="context" enctype="multipart/form-data">
+             <input type="text" name="name" id="name" placeholder="enter your name">
+             <input type="email" name="email" id="city" placeholder="enter your email">
+             <input type="password" name="password" placeholder="enter your password">
+             <input type="password" name="confirmpassword" placeholder="enter your password again">
+             <input type="file" id="profile_image" name="profileImage" accept="image/*" required>
+             <button class="btn">Register</button>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+           

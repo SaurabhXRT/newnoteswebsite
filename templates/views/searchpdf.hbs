@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="searchpdf.css">
+    <title>yournotes.com</title>
+    <script>
+        function myFunction(){
+
+var x = document.getElementById("container");
+var z = document.getElementById("h1");
+
+  if (x.style.display == "none") {
+    x.style.display = "block";
+    z.style.marginTop = "3.5rem";
+  } else {
+    x.style.display = "none";
+    z.style.marginTop = "1.3rem";
+  }
+};
+
+ 
+    </script>
+</head>
+<style>
+
+
+</style>
+<body>
+     
+    <div class="navbar">
+        <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
+        <i class="notes">Yournotes.com</i>
+          <div id="container">
+                <ul>
+                <a href="/protected"> <li>Home</li></a>
+                 <a href="/upload"><li>uploadnotes</li></a>
+                <a href="/logout"><li>Logout</li></a>
+               
+                
+                </ul>
+          </div>
+          <div class="profile">
+            <ul>
+                <a href=""> <li> <img src="{{user.avatar}}" alt="Profile Picture" id="googleimg"></li></a>
+                                                                                     
+              <!--  <a href="/logout">  <li> logout </li></a> -->
+            </ul>
+          </div>
+       
+       
+    </div>
+   
+
+    <div class="search-box" >
+    
+        <form method="get" action="/search" class="form">
+            <label for="searchTerm">Name of Document or subject Name</label>
+            <input type="text" id="searchTerm" name="pdf" placeholder="enter document name or subject name">
+            <button type="submit">Search</button>
+        </form>
+        <hr>
+
+
+       
+
+        
+
+    </div>
+<div class="searchresultpdf">
+      <div class="searchresult" style="display: {{displayResultsx}};">
+         <h1>Search Results</h1>
+
+        </div>
+      <div  class="no-results" style="display: {{displayResultsx}};">no result</div>
+      <div class="searchresult" style="display: {{displayResults}};">
+         <h1>Search Results</h1>
+
+        </div>
+    <table  style="display: {{displayResults}};" >
+  <thead>
+    <tr>
+      <th>Filename</th>
+      <th>Subject</th>
+      <th>Uploader Name</th>
+      <th>Download Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each results}}
+      <tr>
+        <td>{{this.filename}}</td>
+        <td>{{this.subject}}</td>
+        <td>{{this.uploader_name}}</td>
+        <td><a href="{{this.downloadLink}}">Download</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+
+</body>
+</html>
+
+<!--{{#if results.length}}
+  <ul>
+  {{#each results}}
+    <li><a href="/download/{{_id}}">{{filename}}</a></li>
+  {{/each}}
+  </ul>
+{{else}}
+  <p>No results found.</p>
+{{/if}}-->

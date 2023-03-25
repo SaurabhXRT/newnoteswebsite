@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="index.css">
+    <title>Yournotes.com</title>
+</head>
+<script>
+    window.addEventListener('scroll', function(){ 
+    if (window.pageYOffset > 0) { 
+        document.querySelector('.navbar').style.backgroundColor = '#ffff';
+       
+
+    } 
+    if (window.pageYOffset == 0) { 
+        document.querySelector('.navbar').style.backgroundColor = 'initial';
+    } 
+
+    
+    
+});
+
+//const toggleButton = document.getElementById("login");
+
+//toggleButton.onclick = function() {
+function myFunction(){
+
+var x = document.getElementById("container");
+
+  if (x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+};
+
+   
+</script>
+<style>
+
+</style>
+<body>
+    <div class="opacity">
+
+        <div class="header">
+
+            <div class="navbar" id="myDIV">
+                <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
+                <i class="notes">Yournotes.com</i>
+                <div id="container">
+                <ul>
+              
+                
+                <a href="/services"><li>AboutUs</li></a>
+                <a href="/login">  <li> login </li></a>
+              <!--  <a href="/register"> <li>Register</li></a> -->
+                </ul>
+               </div>
+            </div>
+            
+        </div>
+      
+        <div class="quotes">
+            <div class="welcome">
+                <h2>welcome to Yournotes.com</h2>
+                
+
+            </div>
+            <hr id="hr">
+            
+             <div class="quotes-line">
+                <h3>Be kind,Be fair,Be honest,Be true and all these things
+                     will come back to you <br> - Dr APJ Abdul Kalam</h3>
+            </div>
+             <div class="quotes-line">
+                <h3>Arise Awake and stop not till the goal is reached
+                      <br> -Swami Vivekananda</h3>
+            </div>
+        </div>
+       
+
+
+    </div>
+
+   
+</body>
+</html>

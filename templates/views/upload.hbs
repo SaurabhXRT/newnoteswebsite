@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="upload.css">
+    <title>yournotes.com</title>
+    <script>
+        function myFunction(){
+
+var x = document.getElementById("container");
+var z = document.getElementById("containerupload");
+  if (x.style.display == "none") {
+    x.style.display = "block";
+    z.style.marginTop = "3.5rem";
+
+  } else {
+    x.style.display = "none";
+    z.style.marginTop = "1.3rem";
+  }
+};
+
+    </script>
+</head>
+<style>
+  :root{
+    --green: rgb(110, 48, 48);
+    --black: #192a56;
+    --light-color: #dcedf7;
+    --box-shadow:0  .5rem 1.5rem rgba(0,0,0,0.1);
+   }
+   *{
+     
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     text-decoration: none;
+     outline: none;
+     border: none;
+     text-transform: capitalize;
+     transition: all .3s linear;
+     
+   }
+    .navbar{
+         background-color: var(--black);
+         box-shadow: var(--box-shadow);
+         display: flex;
+         position: relative;
+     }
+       #container{
+         margin-left: 15%;
+     }
+     .navbar  #container ul{
+         display: flex;
+         justify-content: center;
+         font-weight: 900;
+     }
+         .navbar  #container ul li{
+         padding: 1rem;
+         color: #ffff;
+         font-size: 1.5rem;
+         list-style: none;
+     }
+     .navbar a{
+         text-decoration: none;
+         
+     }
+   .notes{
+         padding: 1rem;
+         color: #fff;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+ 
+     }
+        #menubars{
+         display: none;
+         padding: 1rem;
+         color: black;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+     }
+       #googleimg{
+         height: 100%;
+         width: 100%;
+         border-radius: 50%;
+         
+     }
+       .profile{
+        width: 100%;
+       
+     }
+     .profile ul{
+         margin-left: 25%;
+        
+ 
+     }
+     .profile ul li{
+         width: 4rem;
+          height: 4rem;
+          padding: 0.6rem;
+          list-style-type: none;
+     }
+    
+     .container{
+     margin: 12px auto;
+     background-color: var(--black);
+     width: 70%;
+     padding: 2rem 0 2rem;
+ }
+ input , label{
+     display: block;
+     background-color: #ffff;
+     margin: 1rem auto 1rem  ;
+     padding: .5rem ;
+     width: 60%;
+     border: .2rem solid black;
+     border-radius: 1rem;
+ }
+ .btn{
+     display: block;
+     background-color: #ffff;
+     margin: 1rem auto 1rem  ;
+     padding: .5rem ;
+     width: 60%;
+     border: .2rem solid black;
+     border-radius: 1rem;
+     cursor: pointer;
+ }
+  #menubars{
+         display: none;
+         padding: 1rem;
+         color: black;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+     }
+     .success{
+       text-align: center;
+       color: #fff;
+       font-size: 1.5rem;
+     }
+ 
+     @media(max-width:910px){
+          #container{
+             display: none;
+             margin-left: 0;
+         }
+         #menubars{
+             display: block;
+             color: #fff;
+         }
+         .navbar  #container ul{
+         position: absolute;
+         display: flex;
+         top: 4rem;
+         left: 0rem;
+         padding: 0.1rem 0.5rem 0.1rem ;
+        
+ 
+ 
+         
+         }
+         .navbar #container ul li{
+            padding: 0.5rem;
+            font-size: 1.3rem;
+            color: black;
+         }
+         .container{
+           width: 90%;
+           padding: 1.5rem 0rem 1.5rem;
+         }
+         input, label{
+           margin: 1rem auto 1rem;
+           width: 80%;
+         }
+     }
+   
+</style>
+<body>
+    <div class="navbar">
+         <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
+        <i class="notes">Yournotes.com</i>
+          <div id="container">
+                <ul>
+                <a href="/protected"> <li>Home</li></a>
+                <a href="/searchnotes"> <li> SearchNotes</li></a>
+                <a href="/logout"><li>Logout</li></a>
+                </ul>
+            </div>
+             <div class="profile">
+            <ul>
+                <a href=""> <li> <img src="{{user.avatar}}" alt="Profile Picture" id="googleimg"></li></a>
+                                                                                     
+              <!--  <a href="/logout">  <li> logout </li></a> -->
+            </ul>
+          </div>
+       
+       
+    </div>
+  <div class="container" id="containerupload">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+       
+        <div>
+             <label for="uploader">Uploader name</label>
+             <input type="text" id="uploader" name="uploader" required>
+             <label for="uploader">Subject name</label>
+             <input type="text" id="uploader" name="subject" >
+        </div>
+        <input type="file" name="pdf" required/>
+      <button type="submit" class="btn">Upload PDF</button>
+    </form>
+    <div class="success">
+      <p>{{success}}</p>
+    </div>
+  </div>
+
+</body>
+</html>

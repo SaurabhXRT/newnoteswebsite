@@ -1,0 +1,209 @@
+:root{
+    --green: rgb(110, 48, 48);
+    --black: #192a56;
+    --light-color: #dcedf7;
+    --box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem #ffff;
+   }
+   *{
+     
+     font-family: 'Nunito', sans-serif; 
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     text-decoration: none;
+     outline: none;
+     border: none;
+     text-transform: capitalize;
+    /* transition: all .3s linear;
+     scroll-behavior: smooth;*/
+ 
+     
+   }
+   
+   .header{
+         position: sticky;
+         top: 0;
+         z-index: 1;
+         
+ 
+     }
+   .notes{
+         padding: 1rem;
+         color: black;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+ 
+     }
+    
+    
+     .navbar{
+        /* background-color: var(--black);
+         box-shadow: var(--box-shadow);*/
+         display: flex;
+         width: 100%;
+         
+     }
+      #container{
+         margin-left: 15%;
+     }
+     .navbar ul{
+         display: flex;
+         justify-content: center;
+         font-weight: 900;
+     }
+     .navbar ul li {
+         padding:  1rem;
+         color: black;
+         font-size: 1.5rem;
+         list-style: none;
+         cursor: pointer;
+     }
+     .navbar a{
+         text-decoration: none;
+         
+     }
+     .opacity{
+         
+        
+         position: relative;
+         height: 648px;
+         
+        
+     }
+     .opacity:before {
+         content: ' ';
+         display: block;
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         opacity: 0.5;
+         background-image: url("images/pic-1.jpg");
+         background-size: cover;
+         background-repeat: no-repeat;
+     }
+     .form{
+         width: 25%;
+         margin: 5% auto  ;
+       /* border: 0.1rem solid black;*/
+         font-size: 1.5rem;
+        
+         position: relative;
+        
+     }
+     .form-inner form{
+         display: flex;
+         flex-direction: column;
+     }
+     .form-inner form label{
+         margin-top: 1.5rem;
+     }
+     .form h1{
+        text-align: center;
+        font-size: 2rem;
+     }
+     .form-inner form input{
+         border: 0.1rem solid black;
+         margin-top: 1rem;
+         padding: 0.8rem;
+     }
+     .form-inner form button{
+         border: 0.1rem solid black;
+         margin-top: 1rem;
+         padding: 0.3rem;
+         font-size: 1.5rem;
+     }
+     .or{
+         margin-top: 1rem;
+     }
+     .google{
+         margin: 50% auto;
+         text-align: center;
+         border: 0.2rem solid #192a56;
+         border-radius: 1rem;
+         display: flex;
+         justify-content: center;
+         padding: 0.4rem 0rem 0.4rem 0rem;
+        /* background-color: #192a56;*/
+         
+ 
+     }
+     .google a{
+         color: var(--black);
+         padding-left: 0.5rem;
+     }
+    /*.google:hover{
+        
+     }
+     .google a:hover{
+         background-color: #192a56;
+         color: #fff;
+     }*/
+     .account{
+         font-size: 0.5rem;
+         display: flex;
+         margin-top: 0.8rem;
+         
+        
+     }
+     .account a{
+         list-style: none;
+         font-size: 1rem;
+         cursor: pointer;
+         margin-left: 0.5rem;
+         color: black;
+     }
+     #img{
+         width: 1.8rem;
+         height: 2rem;
+     }
+      #menubars{
+         display: none;
+         padding: 1rem;
+         color: black;
+         font-size: 1.5rem;
+         margin-left: 1.5rem;
+         font-weight: bold;
+         position: relative;
+     }
+ 
+     @media(max-width:910px){
+         .header ul{
+             display: none;
+         }
+         .quotes{
+             font-size: 1rem;
+         }
+         #menubars{
+             display: block;
+         }
+          #container{
+             display: none;
+         }
+           .header .navbar ul{
+         position: absolute;
+         display: flex;
+         top: 4rem;
+         left: 0rem;
+         padding: 0.1rem 0.5rem 0.1rem ;
+ 
+ 
+         
+         }
+         .header .navbar ul li{
+            padding: 0.5rem;
+            font-size: 1rem;
+         }
+ 
+ 
+         .form{
+             top: 9%;
+             margin:  auto;
+             width: 70%;
+         }
+         
+         
+     }
+   
