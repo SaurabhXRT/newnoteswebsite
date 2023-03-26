@@ -23,7 +23,7 @@ hbs.registerHelper(hbsHelpers);
 
 require('dotenv').config()
 dotenv.config();
-app.addPath('/download');
+
 
 
 app.use(session({
