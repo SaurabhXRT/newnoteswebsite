@@ -237,7 +237,7 @@ const uploadd = multer({
 //document upload
 const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: "pdfs" })
 //const bucket = new GridFSBucket(db, { bucketName: "pdfs" });
-  app.post("/upload", upload.single("pdf"), async function (req, res) {
+ /* app.post("/upload", upload.single("pdf"), async function (req, res) {
     try {
       if (!req.user) {
         // Handle the case where req.user is undefined
@@ -289,7 +289,65 @@ const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: "pdfs" })
     } catch (err) {
       res.status(500).send("Error uploading PDF file");
     }
+  });*/
+app.post("/upload", upload.single("pdf"), function (req, res) {
+  if (!req.user) {
+    // Handle the case where req.user is undefined
+    res.redirect('/login');
+    return;
+  }
+  if (!req.file || !req.file.buffer) {
+    res.status(400).send("No PDF file uploaded");
+    return;
+  }
+  const metadata = {
+    uploader_name: req.body.uploader,
+    subject: req.body.subject,
+  };
+  const uploadStream = bucket.openUploadStream(req.file.originalname, { metadata });
+  const bufferStream = new stream.PassThrough();
+  bufferStream.end(req.file.buffer);
+  bufferStream.pipe(uploadStream);
+
+  uploadStream.on("error", function (err) {
+    res.status(500).send("Error uploading PDF file");
+    return;
   });
+
+  uploadStream.on("finish", function () {
+    const userId = req.user._id;
+    const metadata = uploadStream.options.metadata;
+    const newUpload = new Upload({
+      filename: req.file.originalname,
+      uploader_name: metadata.uploader_name,
+      subject: metadata.subject,
+      fileId: uploadStream.id
+    });
+    newUpload.save(function (err, upload) {
+      if (err) {
+        res.status(500).send("Error saving upload document");
+        return;
+      }
+      const user = Newregister.findById(userId, function (err, user) {
+       if (err) {
+          res.status(500).send("Error finding user");
+          return;
+        }
+        user.uploads.push(newUpload._id);
+        user.numUploads++;
+        user.save(function (err) {
+          if (err) {
+            res.status(500).send("Error updating user document count");
+            return;
+          }
+          res.status(201).redirect("/uploads");
+        });
+      });
+      //console.log(user);
+    });
+  });
+});
+
   
   
 
