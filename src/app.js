@@ -23,6 +23,8 @@ hbs.registerHelper(hbsHelpers);
 
 require('dotenv').config()
 dotenv.config();
+app.addPath('/download');
+
 
 app.use(session({
   secret: "44216c18086ba8168d42e1f872a2eababbdd9c4e537cd153f8f38bfe836314ba",
@@ -387,7 +389,9 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
    
     const results = [];
     searchStream.on("data", function (file) {
-      const downloadLink = `/download/${file._id}`;
+      //const downloadLink = `/download/${file._id}`;
+      const downloadLink = `http://uornotes.cyclic.app/download/${file._id}`;
+
       results.push({
         filename: file.filename,
         uploader_name: file.metadata.uploader_name,
