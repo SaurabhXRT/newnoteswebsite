@@ -404,7 +404,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
     });
   });
   
-  app.get('/download/:id',(req, res) => {
+ /* app.get('/download/:id',(req, res) => {
     const fileId = req.params.id;
     try {
       const downloadStream = bucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
@@ -415,7 +415,21 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
     } catch (err) {
       res.status(400).send('Invalid file ID');
     }
-  });
+  });*/
+app.get('/download/:id',(req, res) => {
+  const fileId = req.params.id;
+  try {
+    const downloadStream = bucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
+    downloadStream.on('error', function(err) {
+      res.status(404).send('File not found');
+    });
+    res.setHeader('Content-Disposition', 'attachment; filename="' + downloadStream.filename + '"');
+    downloadStream.pipe(res);
+  } catch (err) {
+    res.status(400).send('Invalid file ID');
+  }
+});
+
     
 
 //postsextion
