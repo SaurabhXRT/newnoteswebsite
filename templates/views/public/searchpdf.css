@@ -67,8 +67,9 @@ body{
     }
    
     .search-box{
-        margin: 2% auto;
+        margin: 5% auto;
         width: 50%;
+        background-color: #fff;
        
     }
     .search-box .form{
@@ -80,8 +81,9 @@ body{
     .search-box .form label,input,button{
         padding: 0.5rem;
         margin-top: 1rem;
-        background-color: #fff;
+        background-color: #eee;
         border-radius: 1rem;
+        border: 0.1rem solid var(--black);
 
 
     }
@@ -99,9 +101,7 @@ body{
         margin-left: 1.5rem;
         font-weight: bold;
     }
-    .searchresult ul li{
-        padding: 0.8rem;
-    }
+    
     #googleimg{
         height: 100%;
         width: 100%;
@@ -130,11 +130,20 @@ body{
         font-size: 1rem;
     }
     .searchresultpdf{
-      width: 80%;
-      margin: auto;
+    width: 100%;
+    
+     display: flex;
+     justify-content: center;
+    
      
     }
-
+   
+    .searchresult{
+       
+      width: 60%;
+      margin: auto;
+      text-align: center;
+    }
     @media(max-width:910px){
        
         .quotes{
@@ -154,6 +163,8 @@ body{
         top: 4rem;
         left: 0rem;
         padding: 0.1rem 0.5rem 0.1rem ;
+        background-color: #fff;
+        width: 100%;
        
 
 
@@ -169,34 +180,55 @@ body{
             font-size: 0.7rem;
         }
          .search-box{
-        margin: 0.2rem auto;
-        width: 80%;
+        margin: 12% auto;
+        width: 90%;
        
        }
-        
+       .searchresultpdf{
+        width: 100%;
+       }
+       table{
+        padding: 0.7rem;
+       }
+       tbody tr td{
+       
+        margin: 2rem;
+       }
+
                                         
         
 
 
         
     }
+   
       table {
         border-collapse: collapse;
-        margin-top: 20px;
+        margin-top: 1rem;
         display: none;
+        padding: 1rem;
+        border-radius: 1rem;
+       
       }
-      th, td {
-        border: 1px solid black;
-        padding: 5px;
+      tbody{
+        padding: 1rem;
+        background-color: #fff;
+      }
+       td {
+        /*border: 0.1rem solid black;*/
+        padding: 1rem ;
+        color: var(--black);
       }
       th {
-        background-color: lightgrey;
+        background-color: var(--black);
+        color: #fff;
+        padding: 1rem;
       }
       .no-results {
         display: none;
         text-align: center;
         font-style: italic;
-        margin-top: 20px;
+        margin-top: 2rem;
       }
     
   
