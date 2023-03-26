@@ -132,8 +132,9 @@ body{
     .searchresultpdf{
     width: 100%;
     
-     display: flex;
-     justify-content: center;
+    display: flex;
+    justify-content: center;
+     text-align: center;
     
      
     }
@@ -189,11 +190,14 @@ body{
        }
        table{
         padding: 0.7rem;
-       }
-       tbody tr td{
+        font-size: 0.7rem;
        
-        margin: 2rem;
        }
+      tbody{
+        padding: 0.7rem;
+      }
+      
+      
 
                                         
         
@@ -204,10 +208,11 @@ body{
    
       table {
         border-collapse: collapse;
-        margin-top: 1rem;
+        width: 90%;
+        margin: 1rem auto;
         display: none;
         padding: 1rem;
-        border-radius: 1rem;
+       
        
       }
       tbody{
@@ -230,5 +235,6 @@ body{
         font-style: italic;
         margin-top: 2rem;
       }
+     
     
   
