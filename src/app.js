@@ -383,7 +383,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
         { subject: { $regex: new RegExp(query, "i") } },
         { "metadata.subject": { $regex: new RegExp(query, "i") } }
       ]
-    }).lean().stream();
+    }).stream();
    
     const results = [];
     searchStream.on("data", function (file) {
@@ -404,7 +404,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
     });
   });
   
- /* app.get('/download/:id',(req, res) => {
+ app.get('/download/:id',(req, res) => {
     const fileId = req.params.id;
     try {
       const downloadStream = bucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
@@ -415,8 +415,8 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
     } catch (err) {
       res.status(400).send('Invalid file ID');
     }
-  });*/
-app.get('/download/:id',(req, res) => {
+  });
+/*app.get('/download/:id',(req, res) => {
   const fileId = req.params.id;
   try {
     const downloadStream = bucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
@@ -429,7 +429,7 @@ app.get('/download/:id',(req, res) => {
   } catch (err) {
     res.status(400).send('Invalid file ID');
   }
-});
+});*/
 
     
 
