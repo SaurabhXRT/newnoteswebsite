@@ -383,7 +383,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
         { subject: { $regex: new RegExp(query, "i") } },
         { "metadata.subject": { $regex: new RegExp(query, "i") } }
       ]
-    }).stream();
+    }).lean().stream();
    
     const results = [];
     searchStream.on("data", function (file) {
@@ -423,7 +423,8 @@ app.get('/download/:id',(req, res) => {
     downloadStream.on('error', function(err) {
       res.status(404).send('File not found');
     });
-    res.setHeader('Content-Disposition', 'attachment; filename="' + downloadStream.filename + '"');
+    res.set('Content-Disposition', `attachment; filename=${fileId}.pdf`);
+    res.set('Content-Type', 'application/pdf');
     downloadStream.pipe(res);
   } catch (err) {
     res.status(400).send('Invalid file ID');
