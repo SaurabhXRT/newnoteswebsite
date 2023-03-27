@@ -208,8 +208,8 @@ body{
    
       table {
         border-collapse: collapse;
-        width: 90%;
-        margin: 1rem auto;
+       /* width: 90%;
+        margin: 1rem auto;*/
         display: none;
         padding: 1rem;
        
