@@ -94,7 +94,6 @@ app.get("/services", (req,res) =>{
 
 //now we need to create a collection
 
-const Register = new mongoose.model("Registerion", employeeSchema);*/
 const uploadSchema = new mongoose.Schema({
   filename: String,
   uploader_name: String,
