@@ -1,198 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
-     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="home.css">
-    <title></title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <link rel="stylesheet" href="home.css">
+  <title></title>
 </head>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 
- <script>
-        function myFunction(){
+<script>
+  function myFunction() {
 
-var x = document.getElementById("container");
-var z = document.getElementById("h1");
+    var x = document.getElementById("container");
+    var z = document.getElementById("h1");
 
-  if (x.style.display == "none") {
-    x.style.display = "block";
-    z.style.marginTop = "3.5rem";
-  } else {
-    x.style.display = "none";
-    z.style.marginTop = "1.3rem";
-  }
-};
-function toggleCommentForm(postId) {
-  var commentAddDiv = document.querySelector('#comment-addd-' + postId);
-  var commentForm = document.querySelector('#comment-form-' + postId);
-  if (commentAddDiv.style.display === 'none') {
-    commentAddDiv.style.display = 'block';
-    commentForm.querySelector('.comment-input').focus();
-  } else {
-    commentAddDiv.style.display = 'none';
-  }
-}
-
-$(document).on('click', '.like-btn', function(event) {
-  event.preventDefault(); // Prevent the default button click behavior
-  
-  const postId = $(this).data('post-id'); // Get the post ID from the button data
-  
-  // Send an AJAX request to the server to increment the like count
-  $.ajax({
-    url: `/like-post/${postId}`,
-    method: 'POST',
-    success: function(response) {
-      // Update the like count in the UI
-      const likesCount = response.likesCount;
-      $(`.like-btn[data-post-id="${postId}"]`).text(`${likesCount} likes`);
-      console.log(likesCount);
-    },
-    error: function(error) {
-      console.error(error);
+    if (x.style.display == "none") {
+      x.style.display = "block";
+      z.style.marginTop = "3.5rem";
+    } else {
+      x.style.display = "none";
+      z.style.marginTop = "1.3rem";
     }
-  });
-});
+  };
+  function toggleCommentForm(postId) {
+    var commentAddDiv = document.querySelector('#comment-addd-' + postId);
+    var commentForm = document.querySelector('#comment-form-' + postId);
+    if (commentAddDiv.style.display === 'none') {
+      commentAddDiv.style.display = 'block';
+      commentForm.querySelector('.comment-input').focus();
+    } else {
+      commentAddDiv.style.display = 'none';
+    }
+  }
 
-$(document).ready(function() {
-  $(".comment-form").submit(function(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
+  $(document).on('click', '.like-btn', function (event) {
+    event.preventDefault(); // Prevent the default button click behavior
 
-    var formData = $(this).serialize(); // Get the form data
+    const postId = $(this).data('post-id'); // Get the post ID from the button data
 
-    // Send the comment data with Ajax
+    // Send an AJAX request to the server to increment the like count
     $.ajax({
-      type: "POST",
-      url: "/comment",
-      data: formData,
-      success: function(response) {
-        // If the comment is successfully added, update the comment section
-        var commentHtml = '<div class="comment">' +
-                            '<ul>' +
-                              '<a href=""><li><img src="' + response.avatar + '" alt="Profile Picture" id="googleimg"></li></a>' +
-                              '<a href=""><li id="username">' + response.name + '</li></a>' +
-                            '</ul>' +
-                            '<p id="this-comment">' + response.comment + '</p>' +
-                          '</div>';
-
-        $("#comment-add-" + response.postid).prepend(commentHtml); // Add the new comment to the comment section
-        $("#comment-form-" + response.postid)[0].reset(); // Clear the form
+      url: `/like-post/${postId}`,
+      method: 'POST',
+      success: function (response) {
+        // Update the like count in the UI
+        const likesCount = response.likesCount;
+        $(`.like-btn[data-post-id="${postId}"]`).html(`${likesCount}  <i class="fa-solid fa-thumbs-up"></i>`);
+        console.log(likesCount);
       },
-      error: function() {
-        alert("Error adding comment");
+      error: function (error) {
+        console.error(error);
       }
     });
   });
-});
+
+  $(document).ready(function () {
+    $(".comment-form").submit(function (event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      var formData = $(this).serialize(); // Get the form data
+
+      // Send the comment data with Ajax
+      $.ajax({
+        type: "POST",
+        url: "/comment",
+        data: formData,
+        success: function (response) {
+          // If the comment is successfully added, update the comment section
+          var commentHtml = '<div class="comment">' +
+            '<ul>' +
+            '<a href=""><li><img src="' + response.avatar + '" alt="Profile Picture" id="googleimg"></li></a>' +
+            '<a href=""><li id="username">' + response.name + '</li></a>' +
+            '</ul>' +
+            '<p id="this-comment">' + response.comment + '</p>' +
+            '</div>';
+
+          $("#comment-add-" + response.postid).prepend(commentHtml); // Add the new comment to the comment section
+          $("#comment-form-" + response.postid)[0].reset(); // Clear the form
+        },
+        error: function () {
+          alert("Error adding comment");
+        }
+      });
+    });
+  });
+
+ /* function fetchComments(postId) {
+    $.ajax({
+      type: "GET",
+      url: `/comments/${postId}`,
+      success: function (comments) {
+        var commentAddDiv = $("#comment-add-" + postId);
+        commentAddDiv.empty(); // Clear the existing comments
+
+        // Append each comment to the comment section
+        comments.forEach(function (comment) {
+          var commentHtml = '<div class="comment">' +
+            '<ul>' +
+            '<a href=""><li><img src="' + comment.user.avatar + '" alt="Profile Picture" id="googleimg"></li></a>' +
+            '<a href=""><li id="username">' + comment.user.name + '</li></a>' +
+            '</ul>' +
+            '<p id="this-comment">' + comment.comment + '</p>' +
+            '</div>';
+
+          commentAddDiv.append(commentHtml);
+        });
+      },
+      error: function () {
+        alert("Error fetching comments");
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    $(".comment-btn").on("click", function (event) {
+      event.preventDefault();
+      var postId = $(this).data("post-id");
+      var commentAddDiv = $("#comment-addd-" + postId);
+
+      if (commentAddDiv.is(":hidden")) {
+        // If comment section is hidden, show it and fetch comments
+        commentAddDiv.show();
+        fetchComments(postId);
+      } else {
+        // If comment section is visible, hide it
+        commentAddDiv.hide();
+      }
+    });
+
+    $(".comment-form").submit(function (event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      var formData = $(this).serialize(); // Get the form data
+
+      // Send the comment data with Ajax
+      $.ajax({
+        type: "POST",
+        url: "/comment",
+        data: formData,
+        success: function (response) {
+          // If the comment is successfully added, update the comment section
+          fetchComments(response.postid);
+
+          $("#comment-form-" + response.postid)[0].reset(); // Clear the form
+        },
+        error: function () {
+          alert("Error adding comment");
+        }
+      });
+    });
+  });*/
 
 
 </script>
 
 <body>
-    <div class="navbar">
-        <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
-        <i class="notes">Yournotes.com</i>
-          <div id="container">
-                <ul>
-                
-                <a href="/searchnotes"> <li> SearchNotes</li></a>
-                 <a href="/upload"><li>UploadNotes</li></a>
-                <a href="/profile"><li>profile</li></a>
-               
-                
-                </ul>
-          </div>
-          <div class="profile">
-            <ul>
-                <a href=""> <li> <img src="{{user.avatar}}" alt="Profile Picture" id="googleimg"></li></a>
-                                                                                  
-             
-            </ul>
-          </div>
-       
-       
+  <div class="navbar">
+    <i class="fas fa-bars" id="menubars" onclick="myFunction()"></i>
+    <i class="notes">Yournotes.com</i>
+    <div id="container">
+      <ul>
+
+        <a href="/searchnotes">
+          <li> SearchNotes</li>
+        </a>
+        <a href="/upload">
+          <li>UploadNotes</li>
+        </a>
+        <a href="/profile">
+          <li>profile</li>
+        </a>
+
+
+      </ul>
     </div>
-    
-    <div class="post-doubt">
-        <div class="post-user">
-            
-            <div class="welcome-user">welcome {{user.name}}😍</div>
-            <div class="post-create">
-            <div class="post-text">
-            <ul>
-                <a href=""> <li> <img src="{{user.avatar}}" alt="Profile Picture" id="googleimg"></li></a>
-            </ul>
-            
-            </div>
-            <form action="/post"  method="post" enctype="multipart/form-data">
-            <input type="text" name="posttext" placeholder="type your doubt" required>
-            <div class="post-image">
-               <input type="file" name="postimage" placeholder="choose any image">
-               <label style="font-size: 0.8rem; color:brown">hey this is hosted on free webservices so database directory for uploading image is currently unavailable so please dont upload image</label>
-               <button type="submit" id="button">post</button>
-            </div>
-            </form>
-            </div>
+    <div class="profile">
+      <ul>
+        <a href="">
+          <li> <img src="{{user.avatar}}" alt="Profile Picture" id="googleimg"></li>
+        </a>
+
+
+      </ul>
+    </div>
+
+
+  </div>
+
+  <div class="post-doubt">
+    <div class="post-user">
+
+      <div class="welcome-user">welcome {{user.name}}😍</div>
+      <div class="post-create">
+        <div class="post-text">
+          <ul>
+            <a href="">
+              <li> <img src="{{user.avatar}}" alt="Profile Picture" id="googleimg"></li>
+            </a>
+          </ul>
 
         </div>
+        <form action="/post" method="post" enctype="multipart/form-data">
+          <input type="text" name="posttext" placeholder="type your doubt" required>
+          <div class="post-image">
+            <input type="file" name="postimage" placeholder="choose any image">
+
+            <button type="submit" id="button">post</button>
+          </div>
+        </form>
+      </div>
+
     </div>
-    
-    {{#each userPosts}}
+  </div>
+
+  {{#each userPosts}}
   <div class="post">
-         <ul>
-                <a href=""> <li> <img src="{{this.user.avatar}}" alt="Profile Picture" id="googleimg"></li></a>
-                <a href=""> <li id="username"> {{this.user.name}} </li> </a>                                                                      
-                <a href=""> <li id="username">{{timeago createdAt}}</li> </a>
-        </ul>
-        
-           
+    <ul>
+      <a href="">
+        <li> <img src="{{this.user.avatar}}" alt="Profile Picture" id="googleimg"></li>
+      </a>
+      <a href="">
+        <li id="username"> {{this.user.name}} </li>
+      </a>
+      <a href="">
+        <li id="username">{{timeago createdAt}}</li>
+      </a>
+    </ul>
+
+
     <p>{{this.posttext}}</p>
     {{#if this.postimage}}
-      <img id="postimage" src="{{this.postimage}}" alt="invalid Image format">
+    <img id="postimage" src="{{this.postimage}}" alt="invalid Image format">
     {{/if}}
     <div class="post-interactions">
-  
-      <button class="like-btn" data-post-id="{{this._id}}">{{this.likes.length}} likes</button>
 
-      <button class="comment-btn" onclick="toggleCommentForm('{{this._id}}')">Comment</button>
+      <button class="like-btn" data-post-id="{{this._id}}">{{this.likes.length}} <i class="fa-solid fa-thumbs-up"></i></button>
+
+     <button class="comment-btn" onclick="toggleCommentForm('{{this._id}}')"><i class="fa-solid fa-comment"></i></button>
+    
     </div>
-    <div class="comment-addd" id="comment-addd-{{this._id}}"  style="display: none;">
-  <form class="comment-form" id="comment-form-{{this._id}}">
-    <input type="text" name="comment" class="comment-input" placeholder="add a comment..." required>
-    <input type="hidden" name="postid" value="{{this._id}}">
-    <button type="submit" class="comment-submit-btn">Post</button>
-  </form>
-  
-  <hr>
-  <div class="comment-add" id="comment-add-{{this._id}}"></div>
-  {{#each this.comments}}
-    <div class="comment">
-      <ul>
-        <a href=""><li><img src="{{this.user.avatar}}" alt="Profile Picture" id="googleimg"></li></a>
-        <a href=""><li id="username">{{this.user.name}}</li></a>
-      </ul>
-      <p id="this-comment">{{{this.comment}}}</p>
+    <div class="comment-addd" id="comment-addd-{{this._id}}" style="display: none;">
+      <form class="comment-form" id="comment-form-{{this._id}}">
+        <input type="text" name="comment" class="comment-input" placeholder="add a comment..." required>
+        <input type="hidden" name="postid" value="{{this._id}}">
+        <button type="submit" class="comment-submit-btn">Post</button>
+      </form>
+
+      <hr>
+      <div class="comment-add" id="comment-add-{{this._id}}"></div>
+      {{#each this.comments}}
+      <div class="comment">
+        <ul>
+          <a href="">
+            <li><img src="{{this.user.avatar}}" alt="Profile Picture" id="googleimg"></li>
+          </a>
+          <a href="">
+            <li id="username">{{this.user.name}}</li>
+          </a>
+        </ul>
+        <p id="this-comment">{{{this.comment}}}</p>
+      </div>
+      {{/each}}
     </div>
-  {{/each}}
- </div>
- </div>
-    
-    
-  
-    
   </div>
-{{/each}}
-  
 
 
 
-    
+
+  </div>
+  {{/each}}
+
+
+
+
+
 </body>
+
 </html>
