@@ -92,36 +92,6 @@ app.get("/services", (req,res) =>{
   res.render("aboutus");
 })
 
-/*const employeeSchema = new mongoose.Schema({
-   name : {
-       type:String,
-       required:true
-   },
- 
-  
-   email: {
-       type:String,
-       required:true
-      
-   },
-   profileImage: {
-    type:String,
-    required:true
-
-   },
-   
-   
-  password: {
-       type:String,
-       required:true
-   },
-   confirmpassword: {
-       type:String,
-       required:true
-   }
-});
-
-
 //now we need to create a collection
 
 const Register = new mongoose.model("Registerion", employeeSchema);*/
@@ -239,59 +209,6 @@ const uploadd = multer({
 //document upload
 const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: "pdfs" })
 //const bucket = new GridFSBucket(db, { bucketName: "pdfs" });
- /* app.post("/upload", upload.single("pdf"), async function (req, res) {
-    try {
-      if (!req.user) {
-        // Handle the case where req.user is undefined
-        res.redirect('/login');
-        return;
-      }
-      if (!req.file || !req.file.buffer) {
-        res.status(400).send("No PDF file uploaded");
-        return;
-      }
-      const metadata = {
-        uploader_name: req.body.uploader,
-        subject: req.body.subject,
-      };
-      const uploadStream = bucket.openUploadStream(req.file.originalname, { metadata });
-      const bufferStream = new stream.PassThrough();
-      bufferStream.end(req.file.buffer);
-      bufferStream.pipe(uploadStream);
-  
-      await new Promise((resolve, reject) => {
-        uploadStream.on("error", function (err) {
-          reject(err);
-        });
-  
-        uploadStream.on("finish", function () {
-          const userId = req.user._id;
-          const metadata = uploadStream.options.metadata;
-          const newUpload = new Upload({
-            filename: req.file.originalname,
-            uploader_name: metadata.uploader_name,
-            subject: metadata.subject,
-            fileId: uploadStream.id
-          });
-          newUpload.save().then(async (upload) => {
-            const user = await Newregister.findById(userId);
-            if (!user) {
-              res.status(404).send("User not found");
-              return;
-            }
-            user.uploads.push(newUpload._id);
-            user.numUploads++;
-            await user.save();
-            res.status(201).redirect("/uploads");
-          }).catch((err) => {
-            reject(err);
-          });
-        });
-      });
-    } catch (err) {
-      res.status(500).send("Error uploading PDF file");
-    }
-  });*/
 app.post("/upload", upload.single("pdf"), function (req, res) {
   if (!req.user) {
     // Handle the case where req.user is undefined
@@ -342,7 +259,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
             res.status(500).send("Error updating user document count");
             return;
           }
-          res.status(201).redirect("/uploads");
+          res.status(201).redirect("/uploaded");
         });
       });
       //console.log(user);
@@ -350,12 +267,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
   });
 });
 
-  
-  
-
-
-
- app.get("/uploads", isLoggedIn,(req, res) =>{
+ app.get("/uploaded", isLoggedIn,(req, res) =>{
   if (!req.user) {
     // Handle the case where req.user is undefined
     res.redirect('/login');
@@ -420,22 +332,6 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
       res.status(400).send('Invalid file ID');
     }
   });
-/*app.get('/download/:id',(req, res) => {
-  const fileId = req.params.id;
-  try {
-    const downloadStream = bucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
-    downloadStream.on('error', function(err) {
-      res.status(404).send('File not found');
-    });
-    res.set('Content-Disposition', `attachment; filename=${fileId}.pdf`);
-    res.set('Content-Type', 'application/pdf');
-    downloadStream.pipe(res);
-  } catch (err) {
-    res.status(400).send('Invalid file ID');
-  }
-});*/
-
-    
 
 //postsextion
 app.post("/post", uploadd.single('postimage'), async (req, res) =>{
@@ -463,6 +359,28 @@ app.post("/post", uploadd.single('postimage'), async (req, res) =>{
     console.log(err);
   }
 });
+
+//delete
+app.post("/deletepost/:postId",  isLoggedIn, async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await UserPost.findById(postId);
+  
+    if (!post) {
+      return res.status(404).send('Post not found');
+    }
+    
+    await UserPost.findByIdAndDelete(postId);
+
+    console.log("Post deleted successfully");
+    res.status(200).json({ message: "Post deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
 
 //commentpost
 app.post("/comment", async (req, res) =>{
@@ -528,113 +446,6 @@ app.post('/like-post/:id', async function(req, res) {
     res.status(500).send('Internal server error');
   }
 });
-
-
-
-
-
-
-//registeration
-
-/*app.post("/register", uploadd.single('profileImage'), async (req, res) => {
-  const { name, email, password, confirmpassword } = req.body;
-
-  if (!name || !email || !password || !confirmpassword) {
-    return res.status(422).send("Please fill in all fields.");
-  }
-
-  try {
-    let userExist = await Register.findOne({ email: email });
-    if (userExist) {
-      return res.status(422).send("Email already exists.");
-    }
-
-    if (password !== confirmpassword) {
-      return res.status(422).send("Passwords do not match.");
-    }
-
-    const profileImage = req.file ? req.file.path : '';
-    const registerEmployee = new Register({
-      name,
-      email,
-      password,
-      confirmpassword,
-      profileImage: profileImage
-    });
-
-    await registerEmployee.save();
-    console.log('Data saved successfully!');
-
-    // Store the user's name and profile image path in the session
-    req.session.user = {
-      name: registerEmployee.name,
-      avatar: registerEmployee.profileImage,
-    };
-   // console.log(name);
-
-    res.redirect('/registration-successful');
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send("Error registering user.");
-  }
-});
-
-app.get('/registration-successful', isLogggedIn, async (req, res) => {
-  
-  try {
-
-    if (!req.session.user) {
-      // Handle the case where req.user is undefined
-      res.redirect('/login');
-      return;
-    }
-    const user = req.session.user;
-    const userPosts = await UserPost.find({})
-    .populate({ path: 'user', select: 'name avatar' })
-    .populate({ path: 'comments', select: 'comment user', populate: { path: 'user', select: 'name avatar' }, options: { sort: { createdAt: -1 }, strictPopulate: false } })
-    .sort({ createdAt: -1 });
-  
-  
-   //const userPosts = await UserPost.find({}).populate('user').populate('comment').sort({ createdAt: -1 });
-
-    userPosts.reverse();
-    res.render('home', { userPosts, user, user: req.user}); 
-   
-  }
-  
-   catch (err) {
-    res.send('internal server error');
-    console.log(err);
-  }
- 
-});
-
-function isLogggedIn(req, res, next) {
-  if (req.session.user) {
-    next();
-  } else {
-    res.send("it seems you are not authenticated")
-  }
-}
-
-
-
-
-app.post('/login', function (req, res) {
-   var email = req.body.email;
-   var password = req.body.password;
- 
-   Register.findOne({ email: email }, function (err, user) {
-     if (err) return res.status(500).send('Error on the server.');
-     if (!user) return res.status(404).send('No user found.');
- 
-     if (password !== user.password) return res.status(401).send("wrong password");
- 
-     //req.session.userId = user._id;
-     res.status(200).render("home" , {
-      user: req.user,});
-   });
- });*/
 
 
 //google authentication
