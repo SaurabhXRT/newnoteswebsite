@@ -13,7 +13,7 @@
      text-decoration: none;
      outline: none;
      border: none;
-     text-transform: capitalize;
+   
      background-color: var(--black);
     /* transition: all .3s linear;
      scroll-behavior: smooth;*/
@@ -71,7 +71,7 @@
          margin-left: 1.5rem;
          font-weight: bold;
      }
-    .aboutus{
+     .aboutus{
          width: 80%;
          margin: 4rem auto;
          color: #fff;
@@ -95,7 +95,6 @@
      #linkedin:hover{
         color: black;
      }
-    
      @media(max-width:910px){
          #menubars{
              display: block;
