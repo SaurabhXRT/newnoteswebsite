@@ -1,5 +1,5 @@
 body{
-    background-color: #eee;
+    background-color: #fff;
 
     }
      :root{
@@ -17,7 +17,7 @@ body{
     text-decoration: none;
     outline: none;
     border: none;
-    text-transform: capitalize;
+   
     transition: all .3s linear;
     
   }
@@ -69,7 +69,7 @@ body{
     .search-box{
         margin: 5% auto;
         width: 50%;
-        background-color: #fff;
+       box-shadow: var(--box-shadow);
        
     }
     .search-box .form{
@@ -87,12 +87,7 @@ body{
 
 
     }
-    .searchresult{
-       margin: 5%;
-       border: #fff;
-       display: none;
-       
-    }
+   
      #menubars{
         display: none;
         padding: 1rem;
@@ -130,11 +125,12 @@ body{
         font-size: 1rem;
     }
     .searchresultpdf{
-    width: 100%;
-    
-    display: flex;
-    justify-content: center;
-     text-align: center;
+      width: 50%;
+      box-shadow: var(--box-shadow);
+      margin: auto;
+     /* display: flex;
+      justify-content: center;*/
+     
     
      
     }
@@ -144,6 +140,7 @@ body{
       width: 60%;
       margin: auto;
       text-align: center;
+      display: none;
     }
     @media(max-width:910px){
        
@@ -166,6 +163,7 @@ body{
         padding: 0.1rem 0.5rem 0.1rem ;
         background-color: #fff;
         width: 100%;
+        box-shadow: var(--box-shadow);
        
 
 
@@ -189,8 +187,10 @@ body{
         width: 100%;
        }
        table{
-        padding: 0.7rem;
+        padding: 0.2rem;
         font-size: 0.7rem;
+        width: 95%;
+        margin-left: 0.1rem;
        
        }
       tbody{
@@ -208,8 +208,8 @@ body{
    
       table {
         border-collapse: collapse;
-       /* width: 90%;
-        margin: 1rem auto;*/
+      /*  width: 95%;
+        margin: auto;*/
         display: none;
         padding: 1rem;
        
