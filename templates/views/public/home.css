@@ -1,262 +1,253 @@
-body{
-    background-color: #eee;
+body {
+  background-color: #fff;
+}
+:root {
+  --green: rgb(110, 48, 48);
+  --black: #192a56;
+  --light-color: #dcedf7;
+  --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+* {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  outline: none;
+  border: none;
 
-    }
-      :root{
-   --green: rgb(110, 48, 48);
-   --black: #192a56;
-   --light-color: #dcedf7;
-   --box-shadow:0  .5rem 1.5rem rgba(0,0,0,0.1);
+  transition: all 0.3s linear;
+}
+.navbar {
+  background-color: var(--black);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  top: 0;
+  position: sticky;
+}
+#container {
+  margin-left: 15%;
+}
+.navbar #container ul {
+  display: flex;
+  justify-content: center;
+  font-weight: 900;
+}
+.navbar #container ul li {
+  padding: 1rem;
+  color: #ffff;
+  font-size: 1.5rem;
+  list-style: none;
+}
+.navbar a {
+  text-decoration: none;
+}
+.notes {
+  padding: 1rem;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-left: 1.5rem;
+  font-weight: bold;
+}
+#menubars {
+  display: none;
+  padding: 1rem;
+  color: black;
+  font-size: 1.5rem;
+  margin-left: 1.5rem;
+  font-weight: bold;
+}
+#googleimg {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+.profile {
+  width: 100%;
+}
+.profile ul {
+  margin-left: 25%;
+}
+.profile ul li {
+  width: 4rem;
+  height: 4rem;
+  padding: 0.6rem;
+  list-style-type: none;
+}
+
+.post-user .post-text ul li {
+  width: 4rem;
+  height: 4rem;
+  padding: 0.6rem;
+  list-style-type: none;
+}
+.post-user .post-text {
+  display: flex;
+}
+.post-user .post-text input {
+  padding: 0.3rem;
+  width: 15rem;
+
+  margin: 1rem 0.3rem 0.7rem;
+}
+
+.post-doubt {
+  margin: 3rem 4rem;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  border-radius: 1rem;
+  width: 40%;
+}
+.post {
+  margin: 1rem 4rem;
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  border-radius: 1rem;
+  width: 40%;
+}
+.post-create {
+  display: flex;
+}
+.post-create form {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem;
+}
+.post-create form input {
+  margin-top: 0.3rem;
+  padding: 0.3rem;
+  border: 0.1rem solid black;
+  border-radius: 0.7rem;
+}
+.post-image {
+  display: flex;
+  flex-direction: column;
+}
+.post-image #button {
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: var(--black);
+  border-radius: 0.6rem;
+  padding: 0.3rem;
+  cursor: pointer;
+}
+.post-text {
+  display: flex;
+  flex-direction: column;
+}
+.post-interactions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.like-btn,
+.comment-btn {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: var(--black);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.like-btn:hover,
+.comment-btn:hover {
+  background-color: #3367d6;
+}
+.post ul li {
+  list-style-type: none;
+}
+.post ul li #googleimg {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.6rem;
+}
+.post ul #username {
+  padding: 0.8rem;
+  color: black;
+}
+.post ul {
+  display: flex;
+  font-size: 1rem;
+}
+hr {
+  border: 0.1rem solid black;
+}
+.comment-addd {
+  margin: 1rem 3rem;
+
+  font-size: 1rem;
+}
+.comment-addd form {
+  display: flex;
+}
+.comment-addd form input {
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 1rem;
+  margin: 0.2rem 0.1rem 0rem 0.3rem;
+  /*border: 0.1rem solid black;*/
+}
+.comment-addd form button {
+  font-size: 1rem;
+  background-color: #fff;
+  color: var(--black);
+  cursor: pointer;
+}
+.comment #this-comment {
+  margin-left: 3rem;
+  border: 0.1rem solid black;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+.post #postimage {
+  width: 18rem;
+  height: 20rem;
+  padding: 0.4rem;
+}
+
+@media (max-width: 910px) {
+  #container {
+    display: none;
+    margin-left: 0;
   }
-     *{
-    
-     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    outline: none;
-    border: none;
-    text-transform: capitalize;
-    transition: all .3s linear;
-    
+  #menubars {
+    display: block;
+    color: #fff;
   }
-    .navbar{
-        background-color: var(--black);
-        box-shadow: var(--box-shadow);
-        display: flex;
-        top: 0;
-        position: sticky;
-    }
-      #container{
-        margin-left: 15%;
-    }
-    .navbar  #container ul{
-        display: flex;
-        justify-content: center;
-        font-weight: 900;
-    }
-        .navbar  #container ul li{
-        padding: 1rem;
-        color: #ffff;
-        font-size: 1.5rem;
-        list-style: none;
-    }
-    .navbar a{
-        text-decoration: none;
-        
-    }
-  .notes{
-        padding: 1rem;
-        color: #fff;
-        font-size: 1.5rem;
-        margin-left: 1.5rem;
-        font-weight: bold;
-
-    }
-       #menubars{
-        display: none;
-        padding: 1rem;
-        color: black;
-        font-size: 1.5rem;
-        margin-left: 1.5rem;
-        font-weight: bold;
-    }
-      #googleimg{
-        height: 100%;
-        width: 100%;
-        border-radius: 50%;
-        
-    }
-      .profile{
-       width: 100%;
-      
-    }
-    .profile ul{
-        margin-left: 25%;
-       
-
-    }
-    .profile ul li{
-        width: 4rem;
-         height: 4rem;
-         padding: 0.6rem;
-         list-style-type: none;
-    }
-  
-    .post-user .post-text ul li{
-         width: 4rem;
-         height: 4rem;
-         padding: 0.6rem;
-         list-style-type: none;
-    }
-    .post-user .post-text{
-        display: flex;
-    }
-     .post-user .post-text input{
-        padding: 0.3rem;
-        width: 15rem;
-        background-color: #eee;
-        margin: 1rem 0.3rem 0.7rem;
-     }
-
-
-
-  .post, .post-doubt {
-    margin: 3rem 4rem ;
-    padding: 2rem;
+  .navbar #container ul {
+    position: absolute;
+    display: flex;
+    top: 4rem;
+    left: 0rem;
+    padding: 0.1rem 0.5rem 0.1rem;
     background-color: #fff;
-    border-radius: 1rem;
-    width: 40%;
+    width: 100%;   
+    box-shadow: var(--box-shadow);
   }
-  .post-create{
-    display: flex;
-  }
-  .post-create form{
-    display: flex;
-    flex-direction: column;
+  .navbar #container ul li {
     padding: 0.5rem;
-  }
-   .post-create form input{
-    margin-top: 0.3rem;
-    padding: 0.3rem;
-    border: 0.1rem solid black;
-    border-radius: 0.7rem;
-   }
-   .post-image{
-    display: flex;
-    flex-direction: column;
-   }
-  .post-image #button{
-    margin-top: 0.3rem;
-    font-size: 1rem;
-    color: #fff;
-    background-color: var(--black);
-    border-radius: 0.6rem;
-    padding: 0.3rem;
-    cursor: pointer;
-  }
-  .post-text{
-    display: flex;
-    flex-direction: column;
-  }
-  .post-interactions {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .like-btn,
-  .comment-btn {
-    margin-right: 10px;
-    padding: 5px 10px;
-    background-color: var(--black);;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .like-btn:hover,
-  .comment-btn:hover {
-    background-color: #3367d6;
-  }
-  .post ul li{
-    
-     list-style-type: none;
-  }
-  .post ul li #googleimg{
-     width: 3rem;
-     height: 3rem;
-     padding: 0.6rem;
-  }
-  .post ul #username{
-    padding: 0.8rem ;
+    font-size: 1.1rem;
     color: black;
   }
-  .post ul{
-    display: flex;
-    font-size: 1rem;
-  }
-  hr{
-    border: 0.1rem solid black;
-    
-  }
-  .comment-addd{
-    margin: 1rem 3rem;
-    
-    font-size: 1rem;
-    
-    
-  }
-   .comment-addd form{
-    display: flex;
-    
-   }
-    .comment-addd form input{
-      width: 100%;
-      padding-left: 2rem;
-      padding-right: 1rem;
-      margin: 0.2rem 0.1rem 0rem 0.3rem;
-      /*border: 0.1rem solid black;*/
-    }
-    .comment-addd form button{
-      font-size: 1rem;
-      background-color: #fff;
-      color: var(--black);
-      cursor: pointer;
-    }
-  .comment #this-comment{
-    margin-left: 3rem;
-    border: 0.1rem solid black;
-    padding: 0.5rem;
-    border-radius: 1rem;
-  }
-  .post #postimage{
-    width: 18rem;
-    height: 20rem;
-    padding: 0.4rem;
-  }
-  
-    @media(max-width:910px){
-       
-       
-         #container{
-            display: none;
-            margin-left: 0;
-        }
-        #menubars{
-            display: block;
-            color: #fff;
-        }
-        .navbar  #container ul{
-        position: absolute;
-        display: flex;
-        top: 4rem;
-        left: 0rem;
-        padding: 0.1rem 0.5rem 0.1rem ;
-        background-color: #fff;
-        width: 100%;
-       
-
-
-        
-        }
-        .navbar #container ul li{
-           padding: 0.5rem;
-           font-size: 1.1rem;
-           color: black;
-        }
-         .post, .post-doubt {
-    margin: 3rem auto ;
+  .post-doubt {
+    margin: 3rem auto;
     padding: 1rem;
-    background-color: #fff;
+ 
     border-radius: 1rem;
     width: 95%;
   }
-  .notes{
+  .post {
+    margin: 1rem auto;
+    padding: 1rem;
+  
+    border-radius: 1rem;
+    width: 95%;
+  }
+  .notes {
     margin-left: 0.8rem;
   }
-
-    }
-       
+}
