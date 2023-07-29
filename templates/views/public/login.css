@@ -13,7 +13,7 @@
      text-decoration: none;
      outline: none;
      border: none;
-     text-transform: capitalize;
+    
     /* transition: all .3s linear;
      scroll-behavior: smooth;*/
  
@@ -188,6 +188,9 @@
          top: 4rem;
          left: 0rem;
          padding: 0.1rem 0.5rem 0.1rem ;
+         width: 100%;
+        
+         box-shadow: var(--box-shadow);
  
  
          
