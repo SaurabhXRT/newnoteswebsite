@@ -279,45 +279,88 @@ app.post('/upload',isLoggedIn, async (req, res) => {
 
  //getting pdf
  
-  app.get("/search",isLoggedIn, function (req, res) {
-    if (!req.user) {
-      // Handle the case where req.user is undefined
-      res.redirect('/login');
-      return;
-    }
-    const query = req.query.pdf;
-    if (!query) {
-      res.status(400).send("Please enter a search term");
-      return;
-    }
-    const searchStream = bucket.find({
-      $or: [
-        { filename: { $regex: new RegExp(query, "i") } },
-        { subject: { $regex: new RegExp(query, "i") } },
-        { "metadata.subject": { $regex: new RegExp(query, "i") } }
-      ]
-    }).stream();
+  // app.get("/search",isLoggedIn, function (req, res) {
+  //   if (!req.user) {
+  //     // Handle the case where req.user is undefined
+  //     res.redirect('/login');
+  //     return;
+  //   }
+  //   const query = req.query.pdf;
+  //   if (!query) {
+  //     res.status(400).send("Please enter a search term");
+  //     return;
+  //   }
+  //   const searchStream = bucket.find({
+  //     $or: [
+  //       { filename: { $regex: new RegExp(query, "i") } },
+  //       { subject: { $regex: new RegExp(query, "i") } },
+  //       { "metadata.subject": { $regex: new RegExp(query, "i") } }
+  //     ]
+  //   }).stream();
    
-    const results = [];
-    searchStream.on("data", function (file) {
-      //const downloadLink = `/download/${file._id}`;
-      const downloadLink = `http://uornotes.cyclic.app/download/${file._id}`;
+  //   const results = [];
+  //   searchStream.on("data", function (file) {
+  //     //const downloadLink = `/download/${file._id}`;
+  //     const downloadLink = `http://uornotes.cyclic.app/download/${file._id}`;
 
-      results.push({
+  //     results.push({
+  //       filename: file.filename,
+  //       uploader_name: file.metadata.uploader_name,
+  //       subject: file.metadata.subject,
+  //       downloadLink: downloadLink,
+  //     });
+  //   });
+  //   searchStream.on("end", function () {
+  //     if (results.length > 0) {
+  //       res.render("searchpdf", { results, displayResults: "block", user: req.user });
+  //     } else {
+  //       res.render("searchpdf", {  displayResultsx: "block" , user: req.user});
+  //     }
+  //   });
+  // });
+
+app.get("/search", function (req, res) {
+  if (!req.user) {
+    res.redirect('/login');
+    return;
+  }
+  const query = req.query.pdf;
+  if (!query) {
+    res.status(400).send("Please enter a search term");
+    return;
+  }
+  Upload.find({
+    $or: [
+      { filename: { $regex: new RegExp(query, "i") } },
+      { subject: { $regex: new RegExp(query, "i") } },
+      { "metadata.subject": { $regex: new RegExp(query, "i") } }
+    ]
+  }, (err, files) => {
+    if (err) {
+      console.error('Error searching for files:', err);
+      res.status(500).send("Error searching for files");
+      return;
+    }
+
+    const results = files.map(file => {
+      const downloadLink = `/download/${file._id}`;
+      return {
         filename: file.filename,
-        uploader_name: file.metadata.uploader_name,
-        subject: file.metadata.subject,
+        uploader_name: file.uploader_name,
+        subject: file.subject,
         downloadLink: downloadLink,
-      });
+        cloudinaryUrl: file.cloudinary_url, 
+      };
     });
-    searchStream.on("end", function () {
-      if (results.length > 0) {
-        res.render("searchpdf", { results, displayResults: "block", user: req.user });
-      } else {
-        res.render("searchpdf", {  displayResultsx: "block" , user: req.user});
-      }
-    });
+
+    if (results.length > 0) {
+      res.render("searchpdf", { results, displayResults: "block", user: req.user });
+    } else {
+      res.render("searchpdf", {  displayResultsx: "block" , user: req.user});
+    }
   });
+});
+
   
  app.get('/download/:id',isLoggedIn, async (req, res) => {
     const fileId = req.params.id;
