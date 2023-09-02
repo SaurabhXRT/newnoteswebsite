@@ -1,6 +1,7 @@
 const express = require("express");
 const stream = require("stream");
 const dotenv = require("dotenv");
+const cloudinary = require("cloudinary").v2;
 const app = express();
 const PORT  = process.env.PORT || 3000
 const hbs = require("hbs");
@@ -12,11 +13,20 @@ const { GridFSBucket } = require("mongodb");
 const passport= require("passport");
 const session = require('express-session');
 const moment = require('moment');
+const fileupload = require("express-fileupload");
+
+app.use(fileupload({ useTempFiles: true }));
 const hbsHelpers = {
     timeago: function(date) {
     return moment(date).fromNow();
   }
 };
+
+cloudinary.config({
+  cloud_name: "dar4ws6v6",
+  api_key: "131471632671278",
+  api_secret: "d0UW2ogmMnEEMcNVcDpzG33HKkY",
+});
 
 // Register helpers with hbs
 hbs.registerHelper(hbsHelpers);
@@ -99,6 +109,7 @@ const uploadSchema = new mongoose.Schema({
   uploader_name: String,
   subject: String,
   fileId: String,
+  cloudinary_url: String, 
   uploadDate: { type: Date, default: Date.now }
 });
 
@@ -192,78 +203,67 @@ const CommentSchema = new mongoose.Schema({
 
 const Comment = new mongoose.model("Comment", CommentSchema);
 
-const uploadd = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/uploads');
-    },
-    filename: function (req, file, cb) {
-      const filename = Date.now() + path.extname(file.originalname);
-      const url = path.join('/uploads', filename).replace(/\\/g, '/');
-      cb(null, filename, url);
-    }
-  })
-});
-
-//document upload
-const bucket = new mongoose.mongo.GridFSBucket(db, { bucketName: "pdfs" })
-//const bucket = new GridFSBucket(db, { bucketName: "pdfs" });
-app.post("/upload", upload.single("pdf"), function (req, res) {
+app.post('/upload',isLoggedIn, async (req, res) => {
   if (!req.user) {
-    // Handle the case where req.user is undefined
     res.redirect('/login');
     return;
   }
-  if (!req.file || !req.file.buffer) {
-    res.status(400).send("No PDF file uploaded");
+
+  if (!req.files || !req.files.pdf) {
+    res.status(400).send('No PDF file uploaded');
     return;
   }
+
+  const pdfFile = req.files.pdf;
+
   const metadata = {
     uploader_name: req.body.uploader,
     subject: req.body.subject,
   };
-  const uploadStream = bucket.openUploadStream(req.file.originalname, { metadata });
-  const bufferStream = new stream.PassThrough();
-  bufferStream.end(req.file.buffer);
-  bufferStream.pipe(uploadStream);
 
-  uploadStream.on("error", function (err) {
-    res.status(500).send("Error uploading PDF file");
-    return;
-  });
+  try {
+    const result = await cloudinary.uploader.upload(pdfFile.tempFilePath, {
+      resource_type: 'raw',
+    });
 
-  uploadStream.on("finish", function () {
-    const userId = req.user._id;
-    const metadata = uploadStream.options.metadata;
     const newUpload = new Upload({
-      filename: req.file.originalname,
+      filename: pdfFile.name,
       uploader_name: metadata.uploader_name,
       subject: metadata.subject,
-      fileId: uploadStream.id
+      fileId: result.public_id,
+      cloudinary_url: result.secure_url,
     });
-    newUpload.save(function (err, upload) {
+
+    newUpload.save(async (err, upload) => {
       if (err) {
-        res.status(500).send("Error saving upload document");
+        console.error('Error saving upload document:', err);
+        res.status(500).send('Error saving upload document');
         return;
       }
-      const user = Newregister.findById(userId, function (err, user) {
-       if (err) {
-          res.status(500).send("Error finding user");
+
+      const userId = req.user._id;
+
+      try {
+        const user = await Newregister.findById(userId);
+
+        if (!user) {
+          res.status(500).send('Error finding user');
           return;
         }
+
         user.uploads.push(newUpload._id);
         user.numUploads++;
-        user.save(function (err) {
-          if (err) {
-            res.status(500).send("Error updating user document count");
-            return;
-          }
-          res.status(201).redirect("/uploaded");
-        });
-      });
-      //console.log(user);
+        await user.save();
+        res.status(201).redirect('/uploaded');
+      } catch (err) {
+        console.error('Error updating user document count:', err);
+        res.status(500).send('Error updating user document count');
+      }
     });
-  });
+  } catch (error) {
+    console.error('Error uploading to Cloudinary:', error);
+    res.status(500).send('Error uploading PDF file');
+  }
 });
 
  app.get("/uploaded", isLoggedIn,(req, res) =>{
@@ -279,7 +279,7 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
 
  //getting pdf
  
-  app.get("/search", function (req, res) {
+  app.get("/search",isLoggedIn, function (req, res) {
     if (!req.user) {
       // Handle the case where req.user is undefined
       res.redirect('/login');
@@ -319,25 +319,38 @@ app.post("/upload", upload.single("pdf"), function (req, res) {
     });
   });
   
- app.get('/download/:id',(req, res) => {
+ app.get('/download/:id',isLoggedIn, async (req, res) => {
     const fileId = req.params.id;
+  
     try {
-      const downloadStream = bucket.openDownloadStream(new mongoose.Types.ObjectId(fileId));
-      downloadStream.on('error', function(err) {
+      const upload = await Upload.findOne({ fileId: fileId });
+  
+      if (!upload) {
         res.status(404).send('File not found');
-      });
-      downloadStream.pipe(res);
+        return;
+      }
+      res.setHeader('Content-Disposition', `attachment; filename="${upload.filename}"`);
+      res.redirect(upload.cloudinary_url); // Redirect to the Cloudinary URL
     } catch (err) {
-      res.status(400).send('Invalid file ID');
+      console.error('Error fetching upload document:', err);
+      res.status(500).send('Error fetching upload document');
     }
   });
 
+
 //postsextion
-app.post("/post", uploadd.single('postimage'), async (req, res) =>{
+app.post("/post",isLoggedIn, async (req, res) =>{
   try{
   
     //const postimage = req.file ? req.file.path : '';
-    const postimage = req.file ? '/uploads/' + req.file.filename : null;
+    const file = req.files.postimage;
+
+    const result = await cloudinary.uploader.upload(file.tempFilePath, {
+      folder: "uploads",
+    });
+
+    const postimage = result.secure_url;
+    
     const posttext = req.body.posttext;
     const user = req.user._id;
     const comment = req.user._id;
