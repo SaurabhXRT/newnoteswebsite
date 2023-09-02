@@ -470,7 +470,7 @@ const clientId = require("../config/googledata").clientID;
 passport.use(new GoogleStrategy({
   clientID: clientId,
   clientSecret: clientSecreT,
-  callbackURL: 'https://uornotes.cyclic.app/google/callback',
+  callbackURL: 'https://iqlearn.onrender.com/google/callback',
 }, (accessToken, refreshToken, profile, done) => {
   Newregister.findOne({  email: profile.emails[0].value }).then(existingUser => {
     if (existingUser) {
